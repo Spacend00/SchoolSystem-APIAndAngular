@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="SchoolSystem.Application.Tests/SchoolSystem.Application.Tests.csproj" Id="a48fc2af-ee3f-423d-80e1-ddc8cfd1f5a0" />
+  <Project Path="SchoolSystem.Application/SchoolSystem.Application.csproj" />
+  <Project Path="SchoolSystem.Domain.Tests/SchoolSystem.Domain.Tests.csproj" Id="47741cbf-8e27-4d03-ba69-cfdedfd4f338" />
+  <Project Path="SchoolSystem.Domain/SchoolSystem.Domain.csproj" />
+  <Project Path="SchoolSystem.Infrastructure/SchoolSystem.Infrastructure.csproj" />
+  <Project Path="SchoolSystem.WebAPI/SchoolSystem.WebAPI.csproj" />
+</Solution>
