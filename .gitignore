@@ -4,3 +4,12 @@
 *.vs
 *.user
 *.suo
+
+## <-------Angular------->
+**/node-modules/
+**/.angular/
+**/dist/
+
+## <------Genel----->
+.vscode/
+.DS_Store
