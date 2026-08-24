@@ -20,9 +20,8 @@ namespace SchoolSystem.WebAPI.Endpoints
                 return Results.NoContent();
             });
 
-            group.MapPut("/update/{id:guid}", async (Guid id, UpdateStudentCommand command, IMediator mediator) =>
+            group.MapPut("/update", async ( UpdateStudentCommand command, IMediator mediator) =>
             {
-                command.Id = id;
                 await mediator.Send(command);
                 return Results.NoContent();
             });

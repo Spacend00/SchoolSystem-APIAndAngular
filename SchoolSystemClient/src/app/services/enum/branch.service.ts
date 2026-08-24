@@ -15,6 +15,10 @@ export class BranchService {
   private apiUrl = "https://localhost:7038/api/enums/get-branches";
 
   getBranches(): Observable<Branch[]> {
-    return this.http.get<Branch[]>(this.apiUrl);
+    return this.http.get<Branch[]>(`${this.apiUrl}/get-branches`);
+  }
+
+  getById(id: number): Observable<Branch> {
+    return this.http.get<Branch>(`${this.apiUrl}/getby-id/${id}`)
   }
 }

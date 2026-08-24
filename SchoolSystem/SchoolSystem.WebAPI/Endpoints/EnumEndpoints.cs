@@ -14,6 +14,12 @@ namespace SchoolSystem.WebAPI.Endpoints
                 var branches = await mediator.Send(new GetBranchesEnumQuery());
                 return Results.Ok(branches);
             });
+
+            group.MapGet("/getby-id/{id:int}", async (int id, IMediator mediator) =>
+            {
+                var result = await mediator.Send(new GetBranchByIdEnumQuery(id));
+                return Results.Ok(result);
+            });
         }
     }
 }
