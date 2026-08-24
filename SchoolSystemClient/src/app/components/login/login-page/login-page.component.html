@@ -2,8 +2,8 @@
     <div class="card shadow-lg">
         <div class="card-header text-center">
             <div class="nav nav-tabs card-header-tabs">
-                <button class="btn nav-link w-50" [ngClass]="{'active': activeRole === 'student'}" (click)="setRole('student')">Student</button>
-                <button class="btn nav-link w-50" [ngClass]="{'active': activeRole === 'teacher'}" (click)="setRole('teacher')">Teacher</button>
+                <button class="btn nav-link w-50" [ngClass]="{'active disabled': activeRole === 'student'}" (click)="setRole('student')">Student</button>
+                <button class="btn nav-link w-50" [ngClass]="{'active disabled': activeRole === 'teacher'}" (click)="setRole('teacher')">Teacher</button>
             </div>            
         </div>
         <div class="card-body" [formGroup]="formBody">
@@ -17,7 +17,10 @@
             </div>
         </div>
         <div class="card-footer border-0 bg-transparent">
-                <button class="btn btn-primary w-100" (click)="onSumbit()">Login</button>
+            <div class="text-center mb-3">
+                <a routerLink="/register"  class="text-primary text-decoration-none">Hesabın yok mu?</a>
+            </div>
+            <button class="btn btn-primary w-100" (click)="onSumbit()">Login</button>
         </div>
     </div>
 </div>

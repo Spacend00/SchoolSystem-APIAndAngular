@@ -1,16 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterService } from '../../../services/auth/register.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequestStudent, RegisterRequestTeacher } from '../../../models/auth/register.model';
 import { Branch, BranchService } from '../../../services/enum/branch.service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink, RouterModule } from "@angular/router";
+import { first } from 'rxjs';
+import { email } from '@angular/forms/signals';
 
 
 type Role = 'student' | 'teacher';
 
 @Component({
   selector: 'app-register-page',
-  imports: [CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })
@@ -18,17 +22,40 @@ export class RegisterPageComponent implements OnInit {
   private service = inject(RegisterService);
   private branchService = inject(BranchService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   protected activeRole: Role = 'student';
   protected formBody!: FormGroup;
   protected branches!: Branch[];
 
+  private mapStudentReq(formValue: any): RegisterRequestStudent{
+    return {
+      name: formValue.firstName,
+      surname: formValue.lastName,
+      age: formValue.age,
+      schoolNumber: formValue.schoolNumber,
+      email: formValue.email,
+      password: formValue.password
+    }
+  }
+  private mapTeacherReq(formValue: any): RegisterRequestTeacher{
+    return {
+      name: formValue.firstName,
+      surname: formValue.lastName,
+      age: formValue.age,
+      branch: formValue.branch,
+      email: formValue.email,
+      password: formValue.password
+    }
+  }
   ngOnInit(): void {
     this.formBody = this.fb.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(8)]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      age: [null, [Validators.required, Validators.min(15), Validators.max(130)]],
+      schoolNumber: [null],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
       branch: [null]
     });
   }
@@ -46,21 +73,23 @@ export class RegisterPageComponent implements OnInit {
   }
 
   setRole(inputRole: Role): void {
+    if(inputRole === 'teacher') this.getBranches();
     this.activeRole = inputRole;
     this.formBody.reset();
   }
-  
 
   onSumbit(): void {
     if(this.formBody.invalid){
       this.formBody.markAllAsTouched();
       return;
     }
+    
     if(this.activeRole === 'student'){
-      const request: RegisterRequestStudent = this.formBody.value as RegisterRequestStudent;
+      const request = this.mapStudentReq(this.formBody.value); 
+      
       this.service.registerStudent(request).subscribe({
         next: (response) => {
-          console.log(response);          
+          this.router.navigate(['/login'], {state: { email: response.email}});      
         },
         error: (err) => {
           console.log(err);          
@@ -69,10 +98,11 @@ export class RegisterPageComponent implements OnInit {
     }
 
     if(this.activeRole === 'teacher'){
-      const request: RegisterRequestTeacher = this.formBody.value as RegisterRequestTeacher;
+      const request = this.mapTeacherReq(this.formBody.value);
+      
       this.service.registerTeacher(request).subscribe({
         next: (response) => {
-          console.log(response);          
+          this.router.navigate(['/login'], {state: {email: response.email}});         
         },
         error: (err) => {
           console.log(err);          

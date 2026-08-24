@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-    <div class="card shadow-lg">
-        <div class="Card-header text-center">
-            <div class="nav nav-tabs">
-                <button class="btn nav-link w-50" [ngClass]="{'active': activeRole === 'student'}" (click)="setRole('student')">Student</button>
-                <button class="btn nav-link w-50" [ngClass]="{'active': activeRole === 'teacher'}" (click)="setRole('teacher')" (click)="getBranches()">Teacher</button>
+    <div class="card shadow-lg ">
+        <div class="card-header text-center">
+            <div class="nav nav-tabs card-header-tabs">
+                <button class="btn nav-link w-50" [ngClass]="{'active disabled': activeRole === 'student'}" (click)="setRole('student')">Student</button>
+                <button class="btn nav-link w-50" [ngClass]="{'active disabled': activeRole === 'teacher'}" (click)="setRole('teacher')">Teacher</button>
             </div>
         </div>
         <div class="card-body" [formGroup]="formBody">
@@ -16,24 +16,35 @@
                 <label for="lastName">Last Name</label>
             </div>
             <div class="form-floating mb-3">
-                <input class="form-control" type="text" id="lastName" formControlName="email">
+                <input class="form-control" type="number" id="age" formControlName="age">
+                <label for="age">Age</label>
+            </div>
+            <div class="form-floating mb-3" [ngClass]="{'d-none': activeRole === 'teacher'}">
+                <input class="form-control" type="text" id="schoolNumber" formControlName="schoolNumber" min="15" max="130">
+                <label for="schoolNumber">SchoolNumber</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" id="email" formControlName="email">
                 <label for="email">Email</label>
             </div>
             <div class="form-floating mb-3">
-                <input class="form-control" type="password" id="password" formControlName="email">
+                <input class="form-control" type="password" id="password" formControlName="password">
                 <label for="password">Password</label>
             </div>
             @if (activeRole === 'teacher') {
-                <select class="form-select w-50">
-                <option selected>Select Branch</option>
+                <select class="form-select w-50" formControlName="branch">
+                <option selected disabled [ngValue]="null">Select Branch</option>
                 @for (item of branches; track $index) {
-                    <option value="{{item.id}}">{{item.name}}</option>
+                    <option [ngValue]="item.id">{{item.name}}</option>
                 }
                 </select>
             }            
         </div>
-        <div class="card-footer">
-            <button class="btn btn-primary w-100">Singup</button>
+        <div class="card-footer border-0 bg-transparent">
+            <div class="text-center mb-3">
+                <a routerLink="/login"  class="text-primary text-decoration-none">Zaten bir hesabın var mı?</a>
+            </div>
+            <button class="btn btn-primary w-100" (click)="onSumbit()">Singup</button>
         </div>
     </div>
 </div>

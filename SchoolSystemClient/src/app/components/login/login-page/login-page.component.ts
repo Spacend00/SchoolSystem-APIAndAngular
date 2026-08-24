@@ -3,12 +3,14 @@ import { LoginService } from '../../../services/auth/login.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginRequest } from '../../../models/auth/login.model';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterModule } from "@angular/router";
 
 type Role = 'student' | 'teacher';
 
 @Component({
   selector: 'app-login-page',
-  imports: [CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
 })

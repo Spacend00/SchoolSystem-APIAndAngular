@@ -1,16 +1,19 @@
 export interface RegisterRequestStudent {
-    firstName: string;
-    lastName: string;
+    name: string;
+    surname: string;
+    age: number;
+    schoolNumber: string;
     email: string;
     password: string;
 }
 
 export interface RegisterRequestTeacher {
-    firstName: string;
-    lastName: string;
+    name: string;
+    surname: string;
+    age: number;
+    branch: number;
     email: string;
     password: string;
-    branch: number;
 }
 
 export interface RegisterResponse {
