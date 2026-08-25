@@ -10,12 +10,12 @@ export class StudentService {
   private http = inject(HttpClient);
   private apiUrl = "https://localhost:7038/api/students";
 
-  getAll(): Observable<StudentGetAllResponse> {
-    return this.http.get<StudentGetAllResponse>(`${this.apiUrl}/getall`);
+  getAll(): Observable<StudentGetAllResponse[]> {
+    return this.http.get<StudentGetAllResponse[]>(`${this.apiUrl}/getall`);
   }
 
-  getAllActive(): Observable<StudentGetAllActiveResponse> {
-    return this.http.get<StudentGetAllActiveResponse>(`${this.apiUrl}/getall-active`);
+  getAllActive(): Observable<StudentGetAllActiveResponse[]> {
+    return this.http.get<StudentGetAllActiveResponse[]>(`${this.apiUrl}/getall-active`);
   }
 
   getById(id: string): Observable<StudentGetByEmailAndIdResponse> {

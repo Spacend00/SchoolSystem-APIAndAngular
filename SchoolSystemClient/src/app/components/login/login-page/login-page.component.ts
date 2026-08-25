@@ -3,7 +3,7 @@ import { LoginService } from '../../../services/auth/login.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginRequest } from '../../../models/auth/login.model';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from "@angular/router";
+import { Router, RouterLink, RouterModule } from "@angular/router";
 
 type Role = 'student' | 'teacher';
 
@@ -17,6 +17,7 @@ type Role = 'student' | 'teacher';
 export class LoginPageComponent implements OnInit{
   private service = inject(LoginService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   protected activeRole: Role = 'student';
   protected formBody!: FormGroup;
@@ -45,6 +46,7 @@ export class LoginPageComponent implements OnInit{
       next: (response) => {
         localStorage.setItem('token', response.token);
         this.formBody.reset();
+        this.router.navigate(["/student-management"]);
       },
       error: (err) => {
         console.log("Giriş başarısız:", err);        
