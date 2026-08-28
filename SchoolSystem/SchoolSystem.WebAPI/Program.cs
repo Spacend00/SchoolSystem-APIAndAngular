@@ -75,14 +75,14 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapAuthEndpoints();
 app.MapStudentEndpoints();
 app.MapTeacherEndpoints();
 app.MapCourseEndpoints();
 app.MapEnumEndpoints();
-
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();

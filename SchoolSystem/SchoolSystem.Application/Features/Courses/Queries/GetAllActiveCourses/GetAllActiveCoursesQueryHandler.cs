@@ -16,7 +16,8 @@ namespace SchoolSystem.Application.Features.Courses.Queries.GetAllActiveCourses
             {
                 Id = c.Id,
                 Name = c.Name,
-                Credit = c.Credit,
+                Description = c.Description,
+                ImageData = c.ImageData,
                 CreatedAt = c.CreatedAt
             }).ToListAsync(cancellationToken);
 

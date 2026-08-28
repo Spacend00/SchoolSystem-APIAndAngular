@@ -14,7 +14,7 @@ namespace SchoolSystem.Application.Features.Courses.UpdateCourse
             if (course == null) throw new Exception("Bu id'ye ait kurs bulunamadı.");
             if (!course.IsActive) throw new Exception("Bu kurs aktif değil.");
 
-            course.UpdateCourse(request.Name, request.Credit);
+            course.UpdateCourse(request.Name, request.Description, request.Goal, request.Summary, request.TargetGroup, request.Gains, request.Requirements, request.ImageData);
             await _courseRepository.SaveChangesAsync();
         }
     }

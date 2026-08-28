@@ -46,7 +46,7 @@ export class LoginPageComponent implements OnInit{
       next: (response) => {
         localStorage.setItem('token', response.token);
         this.formBody.reset();
-        this.router.navigate(["/student-management"]);
+        this.activeRole === 'student'? this.router.navigate(["/student-management"]): this.router.navigate(["/teacher"]);
       },
       error: (err) => {
         console.log("Giriş başarısız:", err);        

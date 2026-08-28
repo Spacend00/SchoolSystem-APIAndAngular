@@ -34,8 +34,12 @@
             @if (activeRole === 'teacher') {
                 <select class="form-select w-50" formControlName="branch">
                 <option selected disabled [ngValue]="null">Select Branch</option>
-                @for (item of branches; track $index) {
-                    <option [ngValue]="item.id">{{item.name}}</option>
+                @if (branches()) {
+                    @for (item of branches(); track $index) {
+                        <option [ngValue]="item.id">{{item.name}}</option>
+                    }
+                }@else {
+                    <option disabled [ngValue]="1">branches loading...</option>
                 }
                 </select>
             }            

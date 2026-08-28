@@ -1,72 +1,8 @@
-#page-row {
-    height: 650px;
-    width: 95%;
+#course-list-card {
+    height: 300px;
 }
 
-#control-card {
-    max-width: 400px;
-}
-
-#list-card {
-    height: 550px;
+.modal-body {
+    height: 500px;
     overflow-y: auto;
-}
-
-.accordion-item {
-  border-radius: 12px !important;
-  overflow: hidden;
-  border: 1px solid #dee2e6 !important;
-
-  // Accordion Butonu (Başlık)
-  .accordion-button {
-    border-top-left-radius: 12px !important;
-    border-top-right-radius: 12px !important;
-    
-    // Accordion kapalıyken alt köşeleri de yuvarlat
-    &.collapsed {
-      border-bottom-left-radius: 12px !important;
-      border-bottom-right-radius: 12px !important;
-    }
-  }  
-}
-
-.accordion-body {
-      border: 1px solid #939393 !important; // İsteğe göre farklı renkte kenarlık (örn: Bootstrap primary)
-      border-radius: 8px !important;         // İç kutunun oval yapılması
-      margin: 3px !important;               // İçeriği vurgulamak için hafif arka plan
-}
-
-.status-indicator {
-    border-radius: 25px;
-    padding: 8px;
-    margin-left: 20px;
-}
-
-.ghost-scroll {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-  }
-
-  /* Sadece kapsayıcıya hover olunca görünsün */
-  &:hover {
-    scrollbar-color: #cbd5e1 transparent;
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #cbd5e1;
-      
-      &:hover {
-        background-color: #94a3b8;
-      }
-    }
-  }
 }

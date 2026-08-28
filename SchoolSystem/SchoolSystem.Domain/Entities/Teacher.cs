@@ -1,6 +1,7 @@
 ﻿
 using SchoolSystem.Domain.Enums;
 using SchoolSystem.Domain.Interfaces;
+using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace SchoolSystem.Domain.Entities
@@ -18,7 +19,8 @@ namespace SchoolSystem.Domain.Entities
         public Branch Branch { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public Course? Course { get; private set; }
+        private readonly List<Course> _courses = new();
+        public IReadOnlyCollection<Course> Courses => _courses.AsReadOnly();
 
         private Teacher() { }
         public Teacher(string name, string surname, int age, string email, string passwordHash, Branch branch, Role role = Role.Teacher)

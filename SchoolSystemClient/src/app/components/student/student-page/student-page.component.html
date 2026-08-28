@@ -1,115 +1,110 @@
-<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-    <div class="row" id="page-row">
-        <div class="card col me-3 border-0 shadow-lg" id="control-card">
-            <div class="card-header mt-3 border-0 bg-transparent">
-                <h5>Student Control Panel</h5>
-            </div>
-            <div class="card-body">
-                <div class="card mb-3 border-3">
-                    <div class="card-body">
-                        <input class="form-control mb-3 border-3" type="text" placeholder="Bir id giriniz">
-                        <button class="btn btn-primary w-100">Getir</button>                      
-                    </div>
-                </div>
-                <div class="card mb-3 border-3">
-                    <div class="card-body">
-                        <input class="form-control mb-3 border-3" type="text" placeholder="Bir e-mail giriniz">
-                        <button class="btn btn-primary w-100">Getir</button>                      
-                    </div>
-                </div>
-                <div class="card mb-3 border-3">
-                    <div class="card-body">
-                        <button class="btn btn-primary w-100" (click)="loadStudents()">Tüm öğrencileri listele</button>
-                    </div>
-                </div>
-                <div class="card border-3">
-                    <div class="card-body">
-                        <button class="btn btn-primary w-100 " (click)="loadActiveStudents()">Aktif öğrencileri listele</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer text-center border-0 bg-transparent">
-                <button class="btn btn-warning w-50 mb-3">Cıkış</button>
-            </div>
-        </div>
-        <div class="card col border-0 shadow-lg" id="view-card">
-            <div class="card-header mt-3 border-0 bg-transparent">
-                <h5>View Panel</h5>
-            </div>
-            <div class="card-body">
-                <div class="card border-3 accordion ghost-scroll" id="list-card"> 
-                    @if (students()) {
-                        @for (item of students(); track $index) {
-                            <div class="accordion ms-3 mt-3 me-3">
-                                <div class="accordion-item">
-                                    <div class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#colapse'+ item.schoolNumber" aria-expanded="true" [aria-controls]="'colapse'+ item.schoolNumber">
-                                            <span class="status-indicator me-3 ms-0" [ngClass]="item.isActive ? 'bg-success': 'bg-danger'"></span>
-                                            <h5 class="mb-0">{{item.fullName}}</h5>
-                                            <small class="text-secondary opacity-75 ms-5">Age: {{item.age}}</small>
-                                            <small class="text-secondary opacity-75 ms-5">No: {{item.schoolNumber}}</small>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div [id]="'colapse'+ item.schoolNumber" class="accordion-collapse collapse" data-bs-parent="#student-info">
-                                    <div class="accordion-body row">
-                                        <input class="form-control col me-1" type="text" placeholder="Name">
-                                        <input class="form-control col me-1" type="text" placeholder="Surname">
-                                        <input class="form-control col me-1" type="number" placeholder="21">
-                                        <button class="btn btn-warning col" [ngClass]="{'disabled': item.isActive === false}">Update</button>
-                                    </div>
-                                </div>
+<div class="container-fluid">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses-tab-pane" type="button" role="tab" aria-controls="courses-tab-pane" aria-selected="false">Kurslarım</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-tab-pane" type="button" role="tab" aria-controls="about-tab-pane" aria-selected="false">About</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <div class="row row-cols-4">
+                @if (true) {
+                    @for (item of [1,2,3,4,5,6,7,8,9,11,12,12,12,12,12]; track $index) {
+                        <div class="col">
+                            <div class="card m-2" id="course-list-card">
+                                <header class="card-header"><h5>Matematik</h5></header>
+                                <body class="card-body">
+                                    description zone
+                                </body>
+                                <footer class="card-footer">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#course-info">Kursu detayları</button>
+                                </footer>
                             </div>
-                        }
-                    }
-                    @if (activeStudents()) {
-                        @for (item of activeStudents(); track $index) {
-                            <div class="accordion ms-3 mt-3 me-3">
-                                <div class="accordion-item">
-                                    <div class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#colapse'+ item.schoolNumber" aria-expanded="true" [aria-controls]="'colapse'+ item.schoolNumber">
-                                            <span class="status-indicator me-3 ms-0 bg-success"></span>
-                                            <h5 class="mb-0">{{item.fullName}}</h5>
-                                            <small class="text-secondary opacity-75 ms-5">Age: {{item.age}}</small>
-                                            <small class="text-secondary opacity-75 ms-5">No: {{item.schoolNumber}}</small>
-                                        </button>
+                        </div>
+                        <div class="modal fade" id="course-info" tabindex="-1" aria-labelledby="course-info" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fs-5">Matematik</h5>
+                                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                </div>
-                                <div [id]="'colapse'+ item.schoolNumber" class="accordion-collapse collapse" data-bs-parent="#student-info">
-                                    <div class="accordion-body row">
-                                        <input class="form-control col me-1" type="text" placeholder="Name">
-                                        <input class="form-control col me-1" type="text" placeholder="Surname">
-                                        <input class="form-control col me-1" type="number" placeholder="21">
-                                        <button class="btn btn-warning col">Update</button>
+                                    <div class="modal-body">
+                                        <div class="row mb-1">
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        IMG
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h6>Course Name</h6>
+                                                        <h6>teacher</h6>
+                                                        <h6>time</h6>
+                                                        <h6>created date</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>Eğitim Amacı</h6><span>Lorem ipsum dolor sit.</span>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>Eğitim Özeti</h6><span>Lorem ipsum dolor sit amet.</span>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>Hedef Kitle</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>Kazanımlar</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>gereksinimler</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <h6>Kullanılacak programlar</h6>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                    @if (student()) {
-                        <div class="accordion ms-3 mt-3 me-3">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#colapse'+ student()?.schoolNumber" aria-expanded="true" [aria-controls]="'colapse'+ student()?.schoolNumber">
-                                        <span class="status-indicator me-3 ms-0" [ngClass]="student()?.isActive ? 'bg-success' :'bg-danger'"></span>
-                                        <h5 class="mb-0">{{student()?.fullName}}</h5>
-                                        <small class="text-secondary opacity-75 ms-5">Age: {{student()?.age}}</small>
-                                        <small class="text-secondary opacity-75 ms-5">No: {{student()?.schoolNumber}}</small>
-                                    </button>
-                                </div>
-                            </div>
-                            <div [id]="'colapse'+ student()?.schoolNumber" class="accordion-collapse collapse" data-bs-parent="#student-info">
-                                <div class="accordion-body row">
-                                    <input class="form-control col me-1" type="text" placeholder="Name">
-                                    <input class="form-control col me-1" type="text" placeholder="Surname">
-                                    <input class="form-control col me-1" type="number" placeholder="21">
-                                    <button class="btn btn-warning col" [ngClass]="{'disabled': student()?.isActive == false}">Update</button>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary w-100">Kayıt ol</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     }
-                </div> 
+                }
             </div>
+        </div>
+        <div class="tab-pane" id="courses-tab-pane" role="tabpanel" aria-labelledby="courses-tab" tabindex="0">
+            Kurslarım sayfası
+        </div>
+        <div class="tab-pane" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            Profile sayfsı
+        </div>
+        <div class="tab-pane" id="about-tab-pane" role="tabpanel" aria-labelledby="about-tab" tabindex="0">
+            About sayfası
         </div>
     </div>
 </div>

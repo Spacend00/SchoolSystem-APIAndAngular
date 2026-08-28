@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolSystem.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using SchoolSystem.Infrastructure.Persistence;
 namespace SchoolSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260828105443_changeImageDataType")]
+    partial class changeImageDataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,12 +238,34 @@ namespace SchoolSystem.Infrastructure.Migrations
                     b.ToTable("Teachers", (string)null);
                 });
 
+            modelBuilder.Entity("SchoolSystem.Domain.Entities.TeacherCourse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("TeacherId", "CourseId")
+                        .IsUnique();
+
+                    b.ToTable("TeacherCourses", (string)null);
+                });
+
             modelBuilder.Entity("SchoolSystem.Domain.Entities.Course", b =>
                 {
                     b.HasOne("SchoolSystem.Domain.Entities.Teacher", "Teacher")
-                        .WithMany("Courses")
+                        .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Teacher");
@@ -265,6 +290,25 @@ namespace SchoolSystem.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("SchoolSystem.Domain.Entities.TeacherCourse", b =>
+                {
+                    b.HasOne("SchoolSystem.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SchoolSystem.Domain.Entities.Teacher", "Teacher")
+                        .WithMany("TeacherCourses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("SchoolSystem.Domain.Entities.Student", b =>
                 {
                     b.Navigation("StudentCourses");
@@ -272,7 +316,7 @@ namespace SchoolSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("SchoolSystem.Domain.Entities.Teacher", b =>
                 {
-                    b.Navigation("Courses");
+                    b.Navigation("TeacherCourses");
                 });
 #pragma warning restore 612, 618
         }

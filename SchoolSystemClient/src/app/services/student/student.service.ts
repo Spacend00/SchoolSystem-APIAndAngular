@@ -18,7 +18,7 @@ export class StudentService {
     return this.http.get<StudentGetAllActiveResponse[]>(`${this.apiUrl}/getall-active`);
   }
 
-  getById(id: string): Observable<StudentGetByEmailAndIdResponse> {
+  getById(id: string | null): Observable<StudentGetByEmailAndIdResponse> {
     return this.http.get<StudentGetByEmailAndIdResponse>(`${this.apiUrl}/getby-id/${id}`);
   } 
 

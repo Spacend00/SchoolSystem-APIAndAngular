@@ -12,9 +12,9 @@ export interface Branch {
 })
 export class BranchService {
   private http = inject(HttpClient);
-  private apiUrl = "https://localhost:7038/api/enums/get-branches";
+  private apiUrl = "https://localhost:7038/api/enums";
 
-  getBranches(): Observable<Branch[]> {
+  getBranchesList(): Observable<Branch[]> {
     return this.http.get<Branch[]>(`${this.apiUrl}/get-branches`);
   }
 

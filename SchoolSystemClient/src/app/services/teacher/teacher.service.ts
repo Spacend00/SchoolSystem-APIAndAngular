@@ -18,7 +18,7 @@ export class TeacherService {
     return this.http.get<TeacherResponse>(`${this.apiUrl}/all-active`);
   }
 
-  getById(id: string): Observable<TeacherResponse> {
+  getById(id: string | null): Observable<TeacherResponse> {
     return this.http.get<TeacherResponse>(`${this.apiUrl}/getby-id/${id}`);
   }
 

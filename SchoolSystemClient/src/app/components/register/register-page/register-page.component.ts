@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RegisterService } from '../../../services/auth/register.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequestStudent, RegisterRequestTeacher } from '../../../models/auth/register.model';
@@ -26,7 +26,7 @@ export class RegisterPageComponent implements OnInit {
 
   protected activeRole: Role = 'student';
   protected formBody!: FormGroup;
-  protected branches!: Branch[];
+  protected branches = signal<Branch[] | null>(null);
 
   private mapStudentReq(formValue: any): RegisterRequestStudent{
     return {
@@ -58,13 +58,15 @@ export class RegisterPageComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(8)]],
       branch: [null]
     });
+
+    this.getBranches();
   }
 
   getBranches(): void {
-    if(this.branches != null) return;
-    this.branchService.getBranches().subscribe({
+    this.branches.set(null);
+    this.branchService.getBranchesList().subscribe({
       next: (response) => {
-        this.branches = response
+        this.branches.set(response);
       },
       error: (err) => {
         console.log(err);        
@@ -73,7 +75,6 @@ export class RegisterPageComponent implements OnInit {
   }
 
   setRole(inputRole: Role): void {
-    if(inputRole === 'teacher') this.getBranches();
     this.activeRole = inputRole;
     this.formBody.reset();
   }
