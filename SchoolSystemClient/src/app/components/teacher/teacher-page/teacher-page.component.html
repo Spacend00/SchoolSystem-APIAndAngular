@@ -156,13 +156,13 @@
                                     </div>
                                     <div class="modal-footer row">
                                         <button class="btn btn-warning col">Güncelle</button>
-                                        <button class="btn btn-danger col">Sil</button>                                        
+                                        <button class="btn btn-danger col" (click)="deleteCourse(tcourse.id)">Sil</button>                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
                 }
-                <div class="card m-2" id="add-course-btn">
+                <div class="card m-2 col" id="add-course-btn" >
                     <body class="card-body d-flex align-items-center justify-content-center">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-course-modal">
                             Yeni kurs ekle

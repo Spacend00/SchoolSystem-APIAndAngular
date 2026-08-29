@@ -151,4 +151,15 @@ export class TeacherPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  deleteCourse(id: any): void {
+    this.courseService.delete(id).subscribe({
+      next: (response) => {
+
+      },
+      error: (err) => {
+        console.log("Kurs silinemedi:", err);        
+      }
+    });
+  }
+
 }

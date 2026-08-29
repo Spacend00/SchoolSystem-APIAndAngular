@@ -52,6 +52,14 @@ export class LoginPageComponent implements OnInit{
         console.log("Giriş başarısız:", err);        
       }
     });
-
   }
+
+  isAvaibleToken(): boolean {
+      const token = localStorage.getItem('token');
+      if(token){
+        return true;
+      }else{
+        return false;
+      }
+    }
 }

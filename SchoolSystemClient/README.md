@@ -1,59 +1,62 @@
-# SchoolSystemClient
+# 🅰️ School Management System - Angular Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.21.
+Bu proje, Okul Yönetim Sistemi projesinin Angular kullanılarak geliştirilmiş ön yüz (UI) uygulamasıdır. Kullanıcı rolüne (Öğrenci / Öğretmen) göre dinamik arayüz sunar.
 
-## Development server
+## 🧰 Kullanılan Teknolojiler
 
-To start a local development server, run:
+- **Framework:** Angular (v21+)
+- **Dil:** TypeScript
+- **Styling:** CSS3 & Bootstrap
+- **Veri İletişimi:** RxJS & HttpClient Module
+- **Yönlendirme:** Angular Router & Auth Guards
 
-```bash
-ng serve
-```
+## 🔑 Öne Çıkan Arayüz Özellikleri
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Dinamik Auth & Role Switching:** 
+  - Öğrenci ve Öğretmen için tek ekranda tab geçişli Giriş (Login) ve Kayıt (Signup) formları.
+  - Rol bazlı navigasyon ve menü görünümü.
+  <p align="center">
+    <img src="readme-assets/student-auth.png" width="400" height="400" alt="Auth Ekranı" />
+    <img src="readme-assets/teacher-auth.png" width="400" height="400" alt="Auth Ekranı" />
+  </p>
+- **Kurs Kataloğu (Home):** Sistemdeki tüm aktif kursların kart yapısında özeti ve detay butonları.
+  <p align="center">
+    <img src="readme-assets/active-courses.png" width="600" height="300">
+  </p>
+- **Öğretmen Yönetim Paneli (Kurslarım):**
+  - Giriş yapan öğretmenin kendi açtığı kursların listelenmesi.
+  - Yeni kurs ekleme kartı ve dinamik yönlendirmesi.
+  <p align="center">
+    <img src="readme-assets/teachers-courses.png" width="500" height="300">
+    <img src="readme-assets/course-control-panel.png" width="500" height="300">
+  </p>
+- **Profil & Detay Sayfaları:** Kurs içerikleri ve eğitmen bilgilerini görüntüleme.
 
-## Code scaffolding
+## Mimari
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Uygulama, sorumlulukların ayrılması (Separation of Concerns) prensibine uygun olarak modüler bir klasör hiyerarşisiyle tasarlanmıştır:
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ ```
+   src/app/
+    ├── components/          # Arayüz Bileşenleri (UI Components)
+    │   ├── login/           # Kullanıcı giriş ekranı bileşeni
+    │   ├── register/        # Öğrenci / Öğretmen tab'lı kayıt ekranı
+    │   ├── student/         # Öğrenciye özel kurs ve profil panelleri
+    │   └── teacher/         # Öğretmene özel kurs yönetim panelleri
+    │
+    ├── models/              # Tip ve Veri Tanımları (TypeScript Interfaces/Types)
+    │   ├── auth/            # Login/Register request ve response modelleri
+    │   ├── course/          # Kurs entity ve DTO modelleri
+    │   ├── student/         # Öğrenci profil modelleri
+    │   └── teacher/         # Öğretmen profil modelleri
+    │
+    ├── services/            # API Servis Katmanı (Data Fetching & State)
+    │   ├── auth/            # Kimlik doğrulama API istekleri
+    │   ├── course/          # Kurs CRUD operasyon servisleri
+    │   ├── student/         # Öğrenci API servisleri
+    │   ├── teacher/         # Öğretmen API servisleri
+    │   └── enum/            # Sabit veri tipleri ve enum'lar
+    │
+    ├── auth.guard.ts        # Yetkisiz sayfa erişimlerini engelleyen Route Guard
+    └── jwt.interceptor.ts   # Tüm HTTP isteklere JWT Token ekleyen Interceptor
+  ```
