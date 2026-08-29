@@ -28,7 +28,7 @@ Bu proje, Okul Yönetim Sistemi projesinin Angular kullanılarak geliştirilmiş
   - Yeni kurs ekleme kartı ve dinamik yönlendirmesi.
   <p align="center">
     <img src="readme-assets/teachers-courses.png" width="500" height="300">
-    <img src="readme-assets/course-control-panel.png" width="500" height="300">
+    <img src="readme-assets/course-control.png" width="500" height="300">
   </p>
 - **Profil & Detay Sayfaları:** Kurs içerikleri ve eğitmen bilgilerini görüntüleme.
 
