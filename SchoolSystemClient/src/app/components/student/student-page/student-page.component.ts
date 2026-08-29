@@ -4,6 +4,8 @@ import { StudentService } from '../../../services/student/student.service';
 import { NgClass } from '@angular/common';
 import { CourseService } from '../../../services/course/course.service';
 import { CustomJwtPayload, StudentGetByEmailAndIdResponse } from '../../../models/student/student.model';
+import { Router } from '@angular/router';
+import { CourseResponse } from '../../../models/course/course.model';
 
 @Component({
   selector: 'app-student-page',
@@ -15,11 +17,15 @@ export class StudentPageComponent implements OnInit {
   private service = inject(StudentService);
   private courseService = inject(CourseService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   protected updateBody!: FormGroup;
   protected student = signal<StudentGetByEmailAndIdResponse | null>(null);
+  protected courses = signal<CourseResponse[] | null>(null);
   
   ngOnInit(): void {
+    this.getAllActiveCourses();
+    
     this.updateBody = this.fb.group({
       id: [null, [Validators.required]],
       name: [null],
@@ -43,6 +49,18 @@ export class StudentPageComponent implements OnInit {
     });
   }
 
+  getAllActiveCourses(): void {
+    this.courses.set(null);
+    this.courseService.getAllActive().subscribe({
+      next: (response) => {
+        this.courses.set(response);        
+      },
+      error: (err) => {
+        console.log("Kurslar listelenemedi:", err);        
+      }
+    });
+  }
+
   getDecodedToken(): CustomJwtPayload | null {
     const token = localStorage.getItem('token');
     if(!token) return null;
@@ -59,5 +77,10 @@ export class StudentPageComponent implements OnInit {
 
   getUserId(payload: CustomJwtPayload | null): string | null {
     return payload ? payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] : null;
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

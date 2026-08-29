@@ -3,6 +3,7 @@ using SchoolSystem.Application.Features.Courses.CreateCourse;
 using SchoolSystem.Application.Features.Courses.Queries.GetAllActiveCourses;
 using SchoolSystem.Application.Features.Courses.Queries.GetAllCourses;
 using SchoolSystem.Application.Features.Courses.Queries.GetCourseById;
+using SchoolSystem.Application.Features.Courses.Queries.GetTeachersCourses;
 using SchoolSystem.Application.Features.Courses.SoftDeleteCourse;
 using SchoolSystem.Application.Features.Courses.UpdateCourse;
 
@@ -48,6 +49,12 @@ namespace SchoolSystem.WebAPI.Endpoints
             {
                 var course = await mediator.Send(new GetCourseByIdQuery(id));
                 return Results.Ok(course);
+            });
+
+            group.MapGet("/getby-teacher-id/{id:guid}", async (Guid id, IMediator mediator) =>
+            {
+                var result = await mediator.Send(new GetTeachersCoursesQuery(id));
+                return Results.Ok(result);
             });
         }
     }

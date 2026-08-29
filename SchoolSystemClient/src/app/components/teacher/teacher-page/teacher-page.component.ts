@@ -4,26 +4,29 @@ import { CourseService } from '../../../services/course/course.service';
 import { CourseResponse, CourseResponseById, CreateCourseRequest, CreateCourseResponse } from '../../../models/course/course.model';
 import { TeacherResponse } from '../../../models/teacher/teacher.model';
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 export interface JWTPayload {  
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': string;
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': string; 
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
 }
+
 @Component({
   selector: 'app-teacher-page',
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './teacher-page.component.html',
   styleUrl: './teacher-page.component.scss',
 })
-//belirli bir kursu al
 export class TeacherPageComponent implements OnInit {
   private teacherService = inject(TeacherService);
   private courseService = inject(CourseService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   protected courses = signal<CourseResponse[] | null>(null);
   protected teacher = signal<TeacherResponse | null>(null);
+  protected teachersCourses = signal<CourseResponse[] | null>(null);
   protected course = signal<CourseResponseById | null>(null);
   protected formBody!: FormGroup;
   protected courseId = signal<string | null>(null);
@@ -59,6 +62,7 @@ export class TeacherPageComponent implements OnInit {
   }
 
   createCourse(): void {
+    
     const request = this.MapCreateCourse(this.formBody.value);
     
     this.courseService.create(request).subscribe({
@@ -72,6 +76,7 @@ export class TeacherPageComponent implements OnInit {
   }
 
   getAllActiveCourses(): void {
+    this.courses.set(null);
     this.courseService.getAllActive().subscribe({
       next: (response) => {
         this.courses.set(response);        
@@ -80,6 +85,21 @@ export class TeacherPageComponent implements OnInit {
         console.log("Kurslar listelenemedi:", err);        
       }
     });
+  }
+
+  getCoursesByTeacherId(): void {
+    this.teachersCourses.set(null);
+    const id = this.getTeacherId(this.getDecodedToken());
+    if(id){
+      this.courseService.getByTeacherId(id).subscribe({
+        next: (response) => {
+          this.teachersCourses.set(response);
+        },
+        error: (err) => {
+          console.log("Öğretmenin kursları alınırken bir hata oluştu:", err);          
+        }
+      });
+    }
   }
 
   getTeacher(): void {
@@ -95,6 +115,7 @@ export class TeacherPageComponent implements OnInit {
   }
 
   getCourse(id: string | null): void {
+    this.course.set(null);
     if(id){
       this.courseService.getById(id).subscribe({
         next: (response) => {
@@ -123,6 +144,11 @@ export class TeacherPageComponent implements OnInit {
 
   getTeacherId(payload: JWTPayload | null): string | null {
     return payload ? payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] : null;
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }

@@ -23,6 +23,10 @@ export class CourseService {
     return this.http.get<CourseResponseById>(`${this.apiUrl}/getby-id/${id}`);
   }
 
+  getByTeacherId(id: string): Observable<CourseResponse[]> {
+    return this.http.get<CourseResponse[]>(`${this.apiUrl}/getby-teacher-id/${id}`);
+  }
+
   create(data: CreateCourseRequest): Observable<CreateCourseResponse> {
     return this.http.post<CreateCourseResponse>(`${this.apiUrl}/create`, data);
   }

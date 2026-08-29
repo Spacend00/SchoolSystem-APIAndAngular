@@ -1,28 +1,29 @@
 <div class="container-fluid">
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+        <li class="nav-item my-2">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" (click)="getAllActiveCourses()">Home</button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item my-2">
             <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses-tab-pane" type="button" role="tab" aria-controls="courses-tab-pane" aria-selected="false">Kurslarım</button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item my-2">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item my-2">
             <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-tab-pane" type="button" role="tab" aria-controls="about-tab-pane" aria-selected="false">About</button>
         </li>
+        <button class="btn btn-danger m-2 ms-auto" (click)="logout()">Logut</button>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <div class="row row-cols-4">
                 @if (true) {
-                    @for (item of [1,2,3,4,5,6,7,8,9,11,12,12,12,12,12]; track $index) {
+                    @for (item of courses(); track $index) {
                         <div class="col">
                             <div class="card m-2" id="course-list-card">
-                                <header class="card-header"><h5>Matematik</h5></header>
+                                <header class="card-header"><h5>{{item.name}}</h5></header>
                                 <body class="card-body">
-                                    description zone
+                                    {{item.description}}
                                 </body>
                                 <footer class="card-footer">
                                     <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#course-info">Kursu detayları</button>
